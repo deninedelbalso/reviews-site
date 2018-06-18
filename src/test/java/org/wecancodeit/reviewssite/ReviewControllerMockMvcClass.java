@@ -19,13 +19,16 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 
 
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(CourseController.class)
+@WebMvcTest(ReviewController.class)
 public class ReviewControllerMockMvcClass {
 
 	@Resource
@@ -61,5 +64,16 @@ public class ReviewControllerMockMvcClass {
 		when(repository.findAllReviews()).thenReturn(allReviews);
 		mvc.perform(get("/show-reviews")).andExpect(model().attribute("reviews", is(allReviews)));
 	}
+	
+	@Test
+	public void shouldBeOkForSingleReview() throws Exception {
+		mvc.perform(get("/review?id=1")).andExpect(status().isOk());
+	}
+
+	@Test
+	public void shouldRouteToSingleReviewsView() throws Exception {
+		mvc.perform(get("/review?id=1")).andExpect(view().name(is("review")));
+	}
+	
 	
 }
