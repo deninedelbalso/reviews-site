@@ -37,4 +37,9 @@ public class ReviewRepository {
 	public Collection<Review> findAllReviews() {
 		return reviewList.values();
 	}
+
+
+	public Object findOne(Long id) {
+		return reviewList.get(id);
+	}
 }
